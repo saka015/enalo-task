@@ -1,6 +1,6 @@
 import { Row, Grid, Col, Form, Input, Select, Button, Typography } from "antd";
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 const { useBreakpoint } = Grid;
 
 const App = () => {
@@ -44,16 +44,30 @@ const App = () => {
           </Title>
         )}
 
-        <Title
-          level={1}
-          style={{
-            textAlign: "center",
-            marginTop: "-5px",
-            marginBottom: "30px",
-          }}
-        >
-          {screens.xs ? "Book Appointment" : "Make an Appointment"}
-        </Title>
+        {screens.xs ? (
+          <Paragraph
+            style={{
+              textAlign: "center",
+              fontSize: "20px",
+              fontWeight: "bold",
+              marginTop: "-5px",
+              marginBottom: "30px",
+            }}
+          >
+            Book Appointment
+          </Paragraph>
+        ) : (
+          <Title
+            level={1}
+            style={{
+              textAlign: "center",
+              marginTop: "-5px",
+              marginBottom: "30px",
+            }}
+          >
+            Make an Appointment
+          </Title>
+        )}
 
         <div style={{ width: "100%" }}>
           <Row gutter={16} justify="center">
@@ -65,7 +79,10 @@ const App = () => {
                   { required: true, message: "Please input your full name!" },
                 ]}
               >
-                <Input placeholder="Full Name *" style={{ padding: "10px" }} />
+                <Input
+                  placeholder="Full Name *"
+                  style={{ padding: "10px", background: "#f5f6f7" }}
+                />
               </Form.Item>
             </Col>
             <Col span={screens.xs ? 24 : 12}>
@@ -80,7 +97,10 @@ const App = () => {
                   },
                 ]}
               >
-                <Input placeholder="Email *" style={{ padding: "10px" }} />
+                <Input
+                  placeholder="Email *"
+                  style={{ padding: "10px", background: "#f5f6f7" }}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -119,7 +139,11 @@ const App = () => {
         </div>
         {!screens.xs && (
           <Form.Item name="message">
-            <Input.TextArea rows={8} placeholder="Message" />
+            <Input.TextArea
+              rows={8}
+              placeholder="Message"
+              style={{ backgroundColor: "#f5f6f7" }}
+            />
           </Form.Item>
         )}
         <Form.Item
