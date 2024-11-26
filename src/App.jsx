@@ -1,35 +1,141 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Row, Grid, Col, Form, Input, Select, Button, Typography } from "antd";
 
-function App() {
-  const [count, setCount] = useState(0)
+const { Title } = Typography;
+const { useBreakpoint } = Grid;
+
+const App = () => {
+  const screens = useBreakpoint();
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <main
+      style={{
+        margin: "0 auto",
+        borderRadius: "8px",
+        paddingLeft: "20px",
+        paddingRight: "20px",
+        textAlign: "center",
+      }}
+    >
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        style={{
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+          borderRadius: "8px",
+          padding: "30px",
+          width: "100%",
+          maxWidth: "700px",
+          margin: "0 auto",
+        }}
+      >
+        {!screens.xs && (
+          <Title level={5} style={{ textAlign: "center" }}>
+            Contact Us
+          </Title>
+        )}
 
-export default App
+        <Title
+          level={1}
+          style={{
+            textAlign: "center",
+            marginTop: "-5px",
+            marginBottom: "30px",
+          }}
+        >
+          {screens.xs ? "Book Appointment" : "Make an Appointment"}
+        </Title>
+
+        <div style={{ width: "100%" }}>
+          <Row gutter={16} justify="center">
+            <Col span={screens.xs ? 24 : 12}>
+              <Form.Item
+                name="fullName"
+                label={screens.xs ? "Full Name *" : null}
+                rules={[
+                  { required: true, message: "Please input your full name!" },
+                ]}
+              >
+                <Input placeholder="Full Name *" style={{ padding: "10px" }} />
+              </Form.Item>
+            </Col>
+            <Col span={screens.xs ? 24 : 12}>
+              <Form.Item
+                name="email"
+                label={screens.xs ? "Email *" : null}
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                    message: "Please input a valid email!",
+                  },
+                ]}
+              >
+                <Input placeholder="Email *" style={{ padding: "10px" }} />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item>
+            <Row gutter={16} justify="center">
+              <Col span={screens.xs ? 24 : 12}>
+                <Form.Item
+                  name="department"
+                  label={screens.xs ? "Department *" : null}
+                >
+                  <Select style={{ width: "100%" }} placeholder="Please Select">
+                    <Select.Option value="CSE">CSE</Select.Option>
+                    <Select.Option value="ECE">ECE</Select.Option>
+                    <Select.Option value="ME">ME</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={screens.xs ? 24 : 12}>
+                <Form.Item
+                  name="available"
+                  label={screens.xs ? "Time *" : null}
+                >
+                  <Select
+                    style={{ width: "100%" }}
+                    placeholder="4:00 Available"
+                  >
+                    <Select.Option value="4:00">4:00 PM</Select.Option>
+                    <Select.Option value="5:00">5:00 PM</Select.Option>
+                    <Select.Option value="6:00">6:00 PM</Select.Option>
+                    <Select.Option value="7:00">7:00 PM</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form.Item>
+        </div>
+        {!screens.xs && (
+          <Form.Item name="message">
+            <Input.TextArea rows={8} placeholder="Message" />
+          </Form.Item>
+        )}
+        <Form.Item
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ width: "200px", padding: "25px" }}
+          >
+            Book Appointment
+          </Button>
+        </Form.Item>
+      </Form>
+    </main>
+  );
+};
+
+export default App;
